@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -9,7 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { overflow-x: hidden; width: 100%; scroll-behavior: auto; }
+html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
 
 :root {
   /* Base — extraída do logotipo */
@@ -47,15 +47,47 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   pointer-events: none; z-index: 1;
 }
 
-/* ═══════════════════════ HEADER GIGANTE (MODELO) ═══════════════════════ */
+/* ═══════════════════════ HEADER GIGANTE & MENU ═══════════════════════ */
 .site-header {
   position: relative;
   background: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: clamp(60px, 10vh, 100px); /* Ligeiramente reduzido para aproximar o corte escuro */
+  padding-top: clamp(80px, 12vh, 120px); 
   z-index: 10;
+}
+
+/* Menu de Navegação */
+.site-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: clamp(15px, 3vw, 40px);
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0,200,212,0.1);
+  z-index: 20;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--ink-light);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover {
+  color: var(--cyan);
+  border-bottom-color: var(--lime);
 }
 
 /* Logo principal centralizada e imponente */
@@ -63,7 +95,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   display: flex; 
   flex-direction: column; 
   align-items: center; 
-  margin-bottom: clamp(40px, 7vh, 80px); /* Reduzido espaço antes das assinaturas */
+  margin-bottom: clamp(40px, 7vh, 80px); 
 }
 .logo-center img {
   width: clamp(280px, 45vw, 600px); 
@@ -89,7 +121,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   justify-content: flex-end; 
   gap: clamp(10px, 2vw, 20px); 
   flex-wrap: wrap;
-  padding: 0 clamp(20px, 5vw, 60px) 15px 0; /* Padding inferior reduzido */
+  padding: 0 clamp(20px, 5vw, 60px) 15px 0; 
 }
 .logo-bottom-right img { 
   height: clamp(32px, 4vw, 48px); 
@@ -107,17 +139,16 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   text-transform: uppercase;
 }
 
-/* ═══════════════════════ HERO (AJUSTADO PARA SUBIR) ═══════════════════════ */
+/* ═══════════════════════ HERO ═══════════════════════ */
 .hero {
   position: relative;
   background: var(--grad-dark);
-  /* AJUSTE CRUCIAL: Padding top mínimo para colar o conteúdo no topo escuro */
   padding: 15px clamp(20px, 5vw, 48px) clamp(60px, 10vh, 100px);
   text-align: center; overflow: hidden;
-  min-height: 70vh; /* Ajustado para acomodar o conteúdo mais alto */
+  min-height: 70vh; 
   display: flex; flex-direction: column;
   align-items: center; 
-  justify-content: flex-start; /* Alinha conteúdo no topo da seção */
+  justify-content: flex-start; 
 }
 
 /* Grade perspectiva */
@@ -149,7 +180,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 }
 @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.7} }
 
-/* Tag de status — BEM PRÓXIMO AO TOPO */
+/* Tag de status */
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px;
   background: rgba(0,200,212,0.10);
@@ -158,7 +189,6 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   font-size: clamp(10px, 1.4vw, 12px); font-weight: 500;
   letter-spacing: .1em; text-transform: uppercase;
   padding: 8px 18px; border-radius: 99px;
-  /* Espaçamento mínimo em cima, margem normal embaixo para o título */
   margin: 0 0 22px 0; 
   position: relative; z-index: 2; opacity: 0;
 }
@@ -446,7 +476,8 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 
 /* ═══════════════════════ MOBILE ═══════════════════════ */
 @media (max-width: 768px) {
-  .site-header { padding-top: clamp(60px, 8vh, 100px); }
+  .site-header { padding-top: clamp(80px, 10vh, 120px); }
+  .site-nav { flex-wrap: wrap; gap: 10px; padding: 10px; }
   .logo-bottom-right { justify-content: center; padding-right: 0; }
   .btn-primary, .btn-secondary { width: 100%; }
   .flow-step {
@@ -464,8 +495,15 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 </head>
 <body>
 
-<header class="site-header" id="site-header">
+<header class="site-header" id="topo">
   
+  <nav class="site-nav">
+    <a href="#topo">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#processo">Processo</a>
+    <a href="#armazenamento">Repositórios</a>
+  </nav>
+
   <div class="logo-center">
     <img 
       src="https://drive.google.com/thumbnail?id=1CRihEASaGkqacV01ce5W3M-SGd9xL01P&sz=w1200" 
@@ -501,7 +539,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXlzOjzoVyxLsV9HH7jEFSTCq2KSM4yueUZ2gSQbaVBk00Kg/viewform" target="_blank" class="btn-primary">
       Solicitar suporte <span class="btn-arrow">→</span>
     </a>
-    <a href="#capacitacao" class="btn-secondary">
+    <a href="#servicos" class="btn-secondary">
       Cursos de capacitação <span class="btn-arrow">↓</span>
     </a>
   </div>
@@ -531,7 +569,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   </div>
 </div>
 
-<section class="section" style="background: var(--off)">
+<section class="section" style="background: var(--off)" id="servicos">
   <div class="section-inner">
     <div class="section-title reveal">
       <span class="eyebrow">Portal de Acesso</span>
@@ -554,7 +592,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
         <span class="card-badge">⏳ Vagas até Agosto/2026</span>
         <h3>Capacitação em R</h3>
         <p>Três módulos especializados: Introdução ao R, Ferramentas Ômicas (WGS, RNA-Seq, Metagenômica) e Modelos Estatísticos.</p>
-        <a href="#capacitacao" class="btn-card">Saiba Mais e Inscreva-se →</a>
+        <a href="#servicos" class="btn-card">Saiba Mais e Inscreva-se →</a>
       </div>
 
       <div class="access-card card-accent-ink reveal">
@@ -569,7 +607,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   </div>
 </section>
 
-<section class="workflow-section">
+<section class="workflow-section" id="processo">
   <div class="section-title reveal">
     <span class="eyebrow">Processo</span>
     <h2>Como funciona o nosso serviço</h2>
@@ -625,7 +663,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   </div>
 </section>
 
-<section class="storage-section">
+<section class="storage-section" id="armazenamento">
   <div class="storage-inner">
     <div class="storage-text reveal">
       <h2>Suas análises, sempre acessíveis</h2>
@@ -674,9 +712,7 @@ function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = c
 function Particle() {
   this.x     = Math.random() * W;
   this.y     = Math.random() * H;
-  // Tamanho ligeiramente maior
   this.r     = Math.random() * 2.5 + 0.8; 
-  // VELOCIDADE DOBRADA (era 0.4)
   this.vx    = (Math.random() - .5) * 0.8; 
   this.vy    = (Math.random() - .5) * 0.8; 
   this.alpha = Math.random() * .5 + .1;
@@ -685,7 +721,6 @@ function Particle() {
 
 function initParticles() { 
   particles = []; 
-  // MAIS QUE DOBRO DE PARTÍCULAS (era 60)
   const particleCount = 150; 
   for (let i = 0; i < particleCount; i++) particles.push(new Particle()); 
 }
@@ -702,7 +737,7 @@ function draw() {
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
       const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-      if (d < 110) { // Distância de conexão ligeiramente maior
+      if (d < 110) { 
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
@@ -728,7 +763,6 @@ heroTL
   .from('#hero-grid', { opacity: 0, scale: 1.08, duration: 2, ease: 'power2.out' }, 0.1)
   .from('#orb1', { opacity: 0, y: 50, duration: 2.2, ease: 'power2.out' }, 0.2)
   .from('#orb2', { opacity: 0, y: 70, duration: 2.2, ease: 'power2.out' }, 0.4)
-  // Tag aparece mais rápido para acompanhar proximidade do topo
   .to('#hero-tag',   { opacity: 1, duration: 0.6, ease: 'back.out(1.5)' }, 0.5) 
   .to('#hero-title', { opacity: 1, y: 0, duration: 1.5, ease: 'expo.out' }, 0.8)
   .to('#hero-sub',   { opacity: 1, y: 0, duration: .85, ease: 'power3.out' }, 1.3)
@@ -746,7 +780,6 @@ ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', sc
   }
 });
 
-// Suavizado o parallax do conteúdo para acompanhar o layout mais justo
 gsap.to('#hero > *:not(#hero-grid):not(#orb1):not(#orb2):not(#particle-canvas)', {
   scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
   y: -40, ease: 'none'
