@@ -13,20 +13,18 @@ html, body { overflow-x: hidden; width: 100%; scroll-behavior: auto; }
 
 :root {
   /* Base — extraída do logotipo */
-  --ink:        #1A2744;   /* Azul-petróleo escuro (lettering LABIAN) */
+  --ink:        #1A2744;
+  /* Azul-petróleo escuro (lettering LABIAN) */
   --ink-mid:    #243560;
   --ink-light:  #2E4A80;
-
   /* Assinatura do logo: gradiente ciano → verde-limão */
   --cyan:       #00C8D4;
   --lime:       #6FD94A;
   --cyan-glow:  rgba(0,200,212,0.22);
   --lime-glow:  rgba(111,217,74,0.18);
-
   /* Acento quente para contraste */
   --coral:      #FF5A5F;
   --coral-glow: rgba(255,90,95,0.18);
-
   /* Neutros */
   --off:        #F2F6FF;
   --white:      #FFFFFF;
@@ -40,11 +38,78 @@ html, body { overflow-x: hidden; width: 100%; scroll-behavior: auto; }
 
 body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: var(--ink); }
 
+/* ═══════════════════════ NAVBAR FLUTUANTE (GLASSMORPHISM) ═══════════════════════ */
+.floating-nav {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(26, 39, 68, 0.45); /* Base escura translúcida */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 200, 212, 0.25); /* Borda ciano sutil */
+  border-radius: 999px;
+  padding: 6px;
+  z-index: 9999;
+  box-shadow: 0 16px 32px rgba(12, 22, 48, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  will-change: transform, opacity;
+}
+.floating-nav.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.nav-link {
+  position: relative;
+  color: rgba(242, 246, 255, 0.65);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  transition: color 0.3s ease;
+  z-index: 2;
+  letter-spacing: 0.02em;
+}
+.nav-link:hover { color: var(--white); }
+.nav-link.active { color: var(--ink); }
+
+/* Indicador Pill Deslizante */
+.nav-pill {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  background: var(--grad-brand);
+  border-radius: 999px;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0 4px 12px var(--cyan-glow);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .floating-nav {
+    top: auto;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(100px);
+    gap: 0px;
+    padding: 4px;
+  }
+  .nav-link { padding: 8px 14px; font-size: 0.8rem; }
+}
+
 /* ═══════════════════════ CANVAS ═══════════════════════ */
 #particle-canvas {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%;
-  pointer-events: none; z-index: 1;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ═══════════════════════ HEADER GIGANTE (MODELO) ═══════════════════════ */
@@ -54,16 +119,15 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: clamp(60px, 10vh, 100px); /* Ligeiramente reduzido para aproximar o corte escuro */
+  padding-top: clamp(60px, 10vh, 100px);
   z-index: 10;
 }
 
-/* Logo principal centralizada e imponente */
 .logo-center {
   display: flex; 
   flex-direction: column; 
   align-items: center; 
-  margin-bottom: clamp(40px, 7vh, 80px); /* Reduzido espaço antes das assinaturas */
+  margin-bottom: clamp(40px, 7vh, 80px);
 }
 .logo-center img {
   width: clamp(280px, 45vw, 600px); 
@@ -80,21 +144,20 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   text-align: center;
 }
 
-/* Assinaturas institucionais na base direita */
 .logo-bottom-right { 
   width: 100%; 
   max-width: 1600px;
   display: flex; 
   align-items: center; 
-  justify-content: flex-end; 
+  justify-content: flex-end;
   gap: clamp(10px, 2vw, 20px); 
   flex-wrap: wrap;
-  padding: 0 clamp(20px, 5vw, 60px) 15px 0; /* Padding inferior reduzido */
+  padding: 0 clamp(20px, 5vw, 60px) 15px 0;
 }
 .logo-bottom-right img { 
   height: clamp(32px, 4vw, 48px); 
   width: auto; 
-  object-fit: contain; 
+  object-fit: contain;
 }
 .header-badge {
   background: var(--grad-dark);
@@ -107,22 +170,21 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   text-transform: uppercase;
 }
 
-/* ═══════════════════════ HERO (AJUSTADO PARA SUBIR) ═══════════════════════ */
+/* ═══════════════════════ HERO ═══════════════════════ */
 .hero {
   position: relative;
   background: var(--grad-dark);
-  /* AJUSTE CRUCIAL: Padding top mínimo para colar o conteúdo no topo escuro */
   padding: 15px clamp(20px, 5vw, 48px) clamp(60px, 10vh, 100px);
   text-align: center; overflow: hidden;
-  min-height: 70vh; /* Ajustado para acomodar o conteúdo mais alto */
+  min-height: 70vh;
   display: flex; flex-direction: column;
   align-items: center; 
-  justify-content: flex-start; /* Alinha conteúdo no topo da seção */
+  justify-content: flex-start;
 }
 
-/* Grade perspectiva */
 .hero-grid {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background-image:
     linear-gradient(rgba(0,200,212,0.07) 1px, transparent 1px),
     linear-gradient(90deg, rgba(111,217,74,0.05) 1px, transparent 1px);
@@ -132,9 +194,9 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   will-change: transform;
 }
 
-/* Orbs */
 .hero-orb-1 {
-  position: absolute; top: -100px; right: -80px;
+  position: absolute;
+  top: -100px; right: -80px;
   width: clamp(280px, 48vw, 480px); height: clamp(280px, 48vw, 480px);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(0,200,212,0.20) 0%, transparent 68%);
@@ -142,35 +204,36 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 }
 .hero-orb-2 {
   position: absolute; bottom: -130px; left: -60px;
-  width: clamp(240px, 38vw, 380px); height: clamp(240px, 38vw, 380px);
+  width: clamp(240px, 38vw, 380px);
+  height: clamp(240px, 38vw, 380px);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(111,217,74,0.15) 0%, transparent 68%);
   animation: pulse 8s ease-in-out infinite 2s;
 }
 @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.7} }
 
-/* Tag de status — BEM PRÓXIMO AO TOPO */
 .hero-tag {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex;
+  align-items: center; gap: 8px;
   background: rgba(0,200,212,0.10);
   border: 1px solid rgba(0,200,212,0.32);
   color: #7EEAF0;
   font-size: clamp(10px, 1.4vw, 12px); font-weight: 500;
-  letter-spacing: .1em; text-transform: uppercase;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   padding: 8px 18px; border-radius: 99px;
-  /* Espaçamento mínimo em cima, margem normal embaixo para o título */
-  margin: 0 0 22px 0; 
+  margin: 0 0 22px 0;
   position: relative; z-index: 2; opacity: 0;
 }
 .hero-tag::before {
   content: ''; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--lime); display: inline-block;
+  background: var(--lime);
+  display: inline-block;
   animation: blink 2s ease-in-out infinite;
   box-shadow: 0 0 8px var(--lime);
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-/* Título hero */
 .hero h1 {
   font-size: clamp(2.4rem, 5.8vw, 5.2rem);
   font-weight: 700; line-height: 1.08;
@@ -184,11 +247,10 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.82) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-
-  .line-2 {
+.line-2 {
   display: block;
-  font-size: clamp(1.2rem, 2.8vw, 2.2rem); /* Controla o tamanho dessa linha específica */
-  margin-top: 10px; /* Dá um leve respiro em relação à palavra de cima */
+  font-size: clamp(1.2rem, 2.8vw, 2.2rem);
+  margin-top: 10px;
   background: linear-gradient(90deg, var(--cyan) 0%, var(--lime) 55%, var(--cyan) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   background-size: 200% 100%;
@@ -205,596 +267,4 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   opacity: 0; transform: translateY(16px);
 }
 
-.hero-cta-group {
-  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-  position: relative; z-index: 2;
-  opacity: 0; transform: translateY(16px);
-}
-
-/* Botões */
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-  background: var(--grad-brand);
-  color: var(--ink);
-  font-weight: 700; font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  padding: 15px 34px; border-radius: 99px;
-  text-decoration: none; border: none; cursor: pointer;
-  box-shadow: 0 0 28px var(--cyan-glow), 0 4px 14px rgba(0,0,0,0.22);
-  transition: all .3s ease;
-}
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 44px var(--lime-glow), 0 8px 24px rgba(0,0,0,0.28); }
-
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-  background: rgba(255,255,255,0.07);
-  color: var(--white);
-  font-weight: 500; font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  padding: 15px 34px; border-radius: 99px;
-  text-decoration: none; border: 1px solid rgba(255,255,255,0.18);
-  cursor: pointer; transition: all .3s ease; backdrop-filter: blur(8px);
-}
-.btn-secondary:hover { background: rgba(0,200,212,0.12); border-color: rgba(0,200,212,0.5); transform: translateY(-3px); }
-.btn-arrow { font-size: 1.1rem; transition: transform .3s; display: inline-block; }
-.btn-primary:hover .btn-arrow, .btn-secondary:hover .btn-arrow { transform: translateX(4px); }
-
-#scroll-hint {
-  position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 9px;
-  z-index: 10; opacity: 0; pointer-events: none;
-}
-.scroll-mouse {
-  width: 24px; height: 38px;
-  border: 1.5px solid rgba(0,200,212,0.45); border-radius: 12px; position: relative;
-}
-.scroll-wheel {
-  position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
-  width: 3px; height: 7px;
-  background: var(--lime); border-radius: 99px;
-  animation: wheel 2s ease-in-out infinite;
-}
-@keyframes wheel { 0%{opacity:1;transform:translateX(-50%) translateY(0)} 70%{opacity:0;transform:translateX(-50%) translateY(16px)} 100%{opacity:0;transform:translateX(-50%) translateY(16px)} }
-.scroll-label { color: rgba(242,246,255,0.4); font-size: .75rem; letter-spacing: .06em; }
-
-/* ═══════════════════════ STAT BAR ═══════════════════════ */
-.stat-bar {
-  background: linear-gradient(90deg, #0F1B38, #1A2C56, #0F1B38);
-  padding: clamp(20px, 3vw, 30px) clamp(20px, 5vw, 48px);
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px; border-bottom: 1px solid rgba(0,200,212,0.18);
-}
-.stat-item { text-align: center; padding: 10px; position: relative; }
-@media (min-width: 769px) {
-  .stat-item + .stat-item::before {
-    content: ''; position: absolute; left: -10px; top: 20%; height: 60%; width: 1px;
-    background: rgba(0,200,212,0.18);
-  }
-}
-.stat-num {
-  display: block; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
-  background: var(--grad-brand);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.stat-label {
-  display: block; font-size: clamp(0.75rem, 1.1vw, 0.9rem);
-  color: rgba(242,246,255,0.50); font-weight: 500;
-  letter-spacing: .04em; margin-top: 5px; text-transform: uppercase;
-}
-
-/* ═══════════════════════ SEÇÕES ═══════════════════════ */
-.section { padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 48px); }
-.section-inner { max-width: 1500px; margin: 0 auto; }
-
-.section-title { text-align: center; margin-bottom: clamp(40px, 6vw, 60px); }
-.section-title h2 { font-size: clamp(1.9rem, 3.8vw, 2.7rem); font-weight: 700; color: var(--ink); margin-bottom: 10px; }
-.section-title p { font-size: clamp(1rem, 1.4vw, 1.15rem); color: #556; line-height: 1.6; }
-.eyebrow {
-  display: inline-block; font-size: clamp(0.72rem, .95vw, 0.82rem); font-weight: 700;
-  letter-spacing: .13em; text-transform: uppercase;
-  background: var(--grad-brand);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: 12px;
-}
-
-/* ═══════════════════════ CARDS ═══════════════════════ */
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(20px, 3vw, 28px); }
-.access-card {
-  background: var(--white); border-radius: var(--radius-lg);
-  padding: clamp(28px, 4vw, 44px);
-  border: 1px solid rgba(0,200,212,0.10);
-  box-shadow: 0 4px 20px rgba(26,39,68,0.05);
-  display: flex; flex-direction: column; position: relative; overflow: hidden;
-  transition: transform .35s ease, box-shadow .35s ease;
-}
-.access-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(26,39,68,0.11), 0 0 0 1px rgba(0,200,212,0.18); }
-
-.card-top-accent {
-  position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .4s cubic-bezier(.23,1,.32,1);
-}
-.access-card:hover .card-top-accent { transform: scaleX(1); }
-.card-accent-brand  .card-top-accent { background: var(--grad-brand); }
-.card-accent-coral  .card-top-accent { background: linear-gradient(90deg, var(--ink), var(--coral)); }
-.card-accent-ink    .card-top-accent { background: linear-gradient(90deg, var(--ink), var(--cyan)); }
-
-.card-icon-wrap {
-  width: clamp(52px, 5.5vw, 66px); height: clamp(52px, 5.5vw, 66px);
-  border-radius: 14px;
-  background: var(--grad-brand);
-  display: flex; align-items: center; justify-content: center;
-  font-size: clamp(22px, 2.8vw, 30px);
-  margin-bottom: 20px;
-  box-shadow: 0 4px 16px var(--cyan-glow);
-}
-.card-accent-coral .card-icon-wrap { background: linear-gradient(135deg, #7A1010, var(--coral)); }
-.card-accent-ink   .card-icon-wrap { background: var(--grad-dark); }
-
-.access-card h3 { font-size: clamp(1.3rem, 2.3vw, 1.55rem); font-weight: 600; color: var(--ink); margin-bottom: 11px; }
-.access-card p  { font-size: clamp(0.98rem, 1.2vw, 1.08rem); color: #556; line-height: 1.65; flex: 1; margin-bottom: 22px; }
-
-.card-badge {
-  display: inline-block; font-size: .78rem; font-weight: 600;
-  background: rgba(255,90,95,0.08); color: var(--coral);
-  padding: 5px 13px; border-radius: 99px; border: 1px solid rgba(255,90,95,0.22);
-  margin-bottom: 14px; width: fit-content;
-}
-.btn-card {
-  display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
-  font-weight: 600; font-size: .98rem; color: var(--ink-mid);
-  text-decoration: none; padding: 9px 0;
-  border-bottom: 2px solid transparent; transition: all .3s;
-}
-.btn-card:hover { color: var(--cyan); border-bottom-color: var(--lime); gap: 11px; }
-
-.card-time {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--grad-dark);
-  color: #7EEAF0; font-size: .92rem; font-weight: 600;
-  padding: 11px 16px; border-radius: 10px;
-  margin-top: auto; align-self: flex-start;
-}
-
-/* ═══════════════════════ WORKFLOW ═══════════════════════ */
-.workflow-section {
-  background: linear-gradient(180deg, var(--white) 0%, #E8EFF8 100%);
-  padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 48px);
-}
-.flow-container { max-width: 1050px; margin: 0 auto; display: flex; flex-direction: column; }
-
-.flow-step {
-  display: flex; align-items: stretch; gap: 28px;
-  padding: 28px 0; border-bottom: 1px solid rgba(0,200,212,0.10);
-}
-.flow-step:last-child { border-bottom: none; }
-
-.flow-step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-.flow-num {
-  width: clamp(48px, 5.5vw, 64px); height: clamp(48px, 5.5vw, 64px);
-  border-radius: 50%;
-  background: var(--grad-dark);
-  color: #7EEAF0;
-  font-size: clamp(1.1rem, 2.3vw, 1.4rem); font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 16px rgba(26,39,68,0.28), 0 0 0 5px rgba(0,200,212,0.09);
-  position: relative; z-index: 1;
-}
-.flow-connector {
-  width: 2px; flex: 1; min-height: 38px;
-  background: linear-gradient(180deg, var(--cyan), rgba(111,217,74,0.1));
-  margin: 0 auto;
-}
-.flow-step:last-child .flow-connector { display: none; }
-
-.flow-content { padding-top: 10px; flex: 1; }
-.flow-tag {
-  font-size: .78rem; font-weight: 700; letter-spacing: .11em;
-  text-transform: uppercase;
-  background: var(--grad-brand);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: 6px; display: block;
-}
-.flow-content h3 { font-size: clamp(1.2rem, 2.3vw, 1.45rem); font-weight: 600; color: var(--ink); margin-bottom: 9px; }
-.flow-content p  { font-size: clamp(1rem, 1.4vw, 1.12rem); color: #667; line-height: 1.6; }
-
-/* ═══════════════════════ STORAGE ═══════════════════════ */
-.storage-section {
-  background: var(--grad-dark);
-  padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 48px);
-  position: relative; overflow: hidden;
-}
-.storage-section::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300C8D4' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/svg%3E");
-}
-.storage-inner {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: clamp(40px, 5vw, 80px); align-items: center;
-  max-width: 1380px; margin: 0 auto;
-}
-.storage-text h2 { font-size: clamp(1.9rem, 3.8vw, 2.7rem); font-weight: 700; color: var(--white); margin-bottom: 18px; line-height: 1.2; }
-.storage-text p  { font-size: clamp(1rem, 1.4vw, 1.15rem); color: rgba(242,246,255,0.78); line-height: 1.7; }
-
-.storage-chips { display: flex; flex-direction: column; gap: 18px; }
-.chip {
-  display: flex; align-items: center; gap: 18px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(0,200,212,0.18);
-  border-radius: 12px; padding: 18px 26px;
-  transition: all .3s;
-}
-.chip:hover { background: rgba(0,200,212,0.09); border-color: rgba(0,200,212,0.40); transform: translateX(8px); }
-.chip-icon {
-  width: 52px; height: 52px; border-radius: 12px;
-  background: rgba(111,217,74,0.10);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-}
-.chip-label { font-size: clamp(1.05rem, 1.4vw, 1.15rem); font-weight: 600; color: var(--white); }
-.chip-sub   { font-size: .9rem; color: rgba(242,246,255,0.55); margin-top: 3px; }
-
-/* ═══════════════════════ FOOTER ═══════════════════════ */
-.site-footer {
-  background: #0C1630;
-  padding: clamp(30px, 4vw, 48px) clamp(20px, 5vw, 60px);
-  text-align: center;
-  border-top: 1px solid rgba(0,200,212,0.15);
-}
-.site-footer p { color: rgba(242,246,255,0.38); font-size: .88rem; line-height: 1.7; }
-.site-footer span {
-  background: var(--grad-brand);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  font-weight: 600;
-}
-
-/* ═══════════════════════ MOBILE ═══════════════════════ */
-@media (max-width: 768px) {
-  .site-header { padding-top: clamp(60px, 8vh, 100px); }
-  .logo-bottom-right { justify-content: center; padding-right: 0; }
-  .btn-primary, .btn-secondary { width: 100%; }
-  .flow-step {
-    flex-direction: column; gap: 12px; border-bottom: none;
-    background: white; padding: 22px; border-radius: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-    border: 1px solid rgba(0,200,212,0.10);
-  }
-  .flow-step-left { flex-direction: row; width: 100%; justify-content: flex-start; gap: 12px; }
-  .flow-connector { display: none; }
-  #scroll-hint { display: none; }
-}
-</style>
-</head>
-<body>
-
-<header class="site-header" id="site-header">
-  
-<div class="logo-bottom-right">
-    <span class="header-badge">DECAN · FEA · UNICAMP</span>
-    <img src="https://lh3.googleusercontent.com/d/1FEvWPHacGwxEMayAtS7nf9pThLEBfoTE" alt="Logo FEA">
-  </div>
-  
-  <div class="logo-center">
-    <img 
-      src="https://drive.google.com/thumbnail?id=1CRihEASaGkqacV01ce5W3M-SGd9xL01P&sz=w1200" 
-      alt="LABIAN">
-  </div>
-
-</header>
-
-<section class="hero" id="hero">
-  <canvas id="particle-canvas"></canvas>
-  <div class="hero-grid" id="hero-grid"></div>
-  <div class="hero-orb-1" id="orb1"></div>
-  <div class="hero-orb-2" id="orb2"></div>
-
-  <div class="hero-tag" id="hero-tag">
-    <span>Serviço Ativo · Atendimento em Andamento</span>
-  </div>
-
-  <h1 id="hero-title">
-    <span class="line-1">Bioinformática</span>
-    <span class="line-2">Departamento de Ciência de Alimentos e Nutrição - DECAN</span>
-  </h1>
-
-  <p id="hero-sub">Suporte em ciência de dados</p>
-
-  <div class="hero-cta-group" id="hero-ctas">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXlzOjzoVyxLsV9HH7jEFSTCq2KSM4yueUZ2gSQbaVBk00Kg/viewform" target="_blank" class="btn-primary">
-      Solicitar suporte <span class="btn-arrow">→</span>
-    </a>
-    <a href="#capacitacao" class="btn-secondary">
-      Cursos de capacitação <span class="btn-arrow">↓</span>
-    </a>
-  </div>
-
-  <div id="scroll-hint">
-    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-    <span class="scroll-label">Scroll</span>
-  </div>
-</section>
-
-<div class="stat-bar">
-  <div class="stat-item">
-    <span class="stat-num" data-target="3">0</span>
-    <span class="stat-label">Módulos de Capacitação</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="6">0</span>
-    <span class="stat-label">Serviços Disponíveis</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">2×</span>
-    <span class="stat-label">Atendimento Semanal</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">100%</span>
-    <span class="stat-label">Suporte Especializado</span>
-  </div>
-</div>
-
-<section class="section" style="background: var(--off)">
-  <div class="section-inner">
-    <div class="section-title reveal">
-      <span class="eyebrow">Portal de Acesso</span>
-      <h2>Como podemos ajudar você?</h2>
-      <p>Escolha a opção que melhor atende à sua necessidade</p>
-    </div>
-    <div class="cards-grid">
-
-      <div class="access-card card-accent-brand reveal">
-        <div class="card-top-accent"></div>
-        <div class="card-icon-wrap">📋</div>
-        <h3>Faça sua Solicitação</h3>
-        <p>Registre sua demanda de análise ou suporte de forma anônima e rastreável. Receba um número de ticket para acompanhar o andamento.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXlzOjzoVyxLsV9HH7jEFSTCq2KSM4yueUZ2gSQbaVBk00Kg/viewform" target="_blank" class="btn-card">Acessar Formulário →</a>
-      </div>
-
-      <div class="access-card card-accent-coral reveal">
-        <div class="card-top-accent"></div>
-        <div class="card-icon-wrap">🎓</div>
-        <span class="card-badge">⏳ Vagas até Agosto/2026</span>
-        <h3>Capacitação em R</h3>
-        <p>Três módulos especializados: Introdução ao R, Ferramentas Ômicas (WGS, RNA-Seq, Metagenômica) e Modelos Estatísticos.</p>
-        <a href="#capacitacao" class="btn-card">Saiba Mais e Inscreva-se →</a>
-      </div>
-
-      <div class="access-card card-accent-ink reveal">
-        <div class="card-top-accent"></div>
-        <div class="card-icon-wrap">📅</div>
-        <h3>Atendimento Presencial</h3>
-        <p>Nossa equipe está disponível presencialmente para suporte técnico, consultoria e acompanhamento de análises em andamento.</p>
-        <div class="card-time">📆  Quartas e Sextas — Tarde</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="workflow-section">
-  <div class="section-title reveal">
-    <span class="eyebrow">Processo</span>
-    <h2>Como funciona o nosso serviço</h2>
-    <p>Do registro à entrega — transparente e rastreável em cada etapa</p>
-  </div>
-  <div class="flow-container">
-
-    <div class="flow-step reveal">
-      <div class="flow-step-left"><div class="flow-num">1</div><div class="flow-connector"></div></div>
-      <div class="flow-content">
-        <span class="flow-tag">Entrada</span>
-        <h3>Formulário Anônimo de Demandas</h3>
-        <p>Registre sua necessidade de forma anônima e segura através do portal. Não é necessário identificação pessoal nesta etapa.</p>
-      </div>
-    </div>
-
-    <div class="flow-step reveal">
-      <div class="flow-step-left"><div class="flow-num">2</div><div class="flow-connector"></div></div>
-      <div class="flow-content">
-        <span class="flow-tag">Rastreamento</span>
-        <h3>Ticket de Acompanhamento</h3>
-        <p>Receba um número de ticket exclusivo (ex: #001, #002…) para rastrear o andamento da sua demanda em tempo real.</p>
-      </div>
-    </div>
-
-    <div class="flow-step reveal">
-      <div class="flow-step-left"><div class="flow-num">3</div><div class="flow-connector"></div></div>
-      <div class="flow-content">
-        <span class="flow-tag">Gestão</span>
-        <h3>Banco de Dados & Organização</h3>
-        <p>A sua solicitação é registrada, organizada e priorizada no sistema interno de gestão de demandas da equipe técnica.</p>
-      </div>
-    </div>
-
-    <div class="flow-step reveal">
-      <div class="flow-step-left"><div class="flow-num">4</div><div class="flow-connector"></div></div>
-      <div class="flow-content">
-        <span class="flow-tag">Análise</span>
-        <h3>Classificação da Demanda</h3>
-        <p>A equipe avalia complexidade, urgência e tipo de análise necessária, direcionando para o fluxo mais adequado.</p>
-      </div>
-    </div>
-
-    <div class="flow-step reveal">
-      <div class="flow-step-left"><div class="flow-num">5</div><div class="flow-connector"></div></div>
-      <div class="flow-content">
-        <span class="flow-tag">Resolução</span>
-        <h3>Suporte Técnico ou Capacitação</h3>
-        <p>Você é direcionado ao suporte direto via Help Desk ou indicado para o módulo do Curso de R mais adequado à sua necessidade.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="storage-section">
-  <div class="storage-inner">
-    <div class="storage-text reveal">
-      <h2>Suas análises, sempre acessíveis</h2>
-      <p style="margin-bottom:14px">As análises realizadas são documentadas e armazenadas de forma organizada, garantindo reprodutibilidade e acesso contínuo aos resultados.</p>
-      <p style="font-size:clamp(0.88rem,1.1vw,.98rem);color:rgba(242,246,255,0.48)">Escolha o formato de armazenamento mais adequado para o seu fluxo de trabalho e as diretrizes do seu laboratório.</p>
-    </div>
-    <div class="storage-chips reveal">
-      <div class="chip">
-        <div class="chip-icon">📄</div>
-        <div>
-          <div class="chip-label">POP — Procedimento Operacional Padrão</div>
-          <div class="chip-sub">Documentação padronizada do laboratório</div>
-        </div>
-      </div>
-      <div class="chip">
-        <div class="chip-icon">💻</div>
-        <div>
-          <div class="chip-label">GitHub do Laboratório</div>
-          <div class="chip-sub">Repositório versionado e colaborativo</div>
-        </div>
-      </div>
-      <div class="chip">
-        <div class="chip-icon">🌐</div>
-        <div>
-          <div class="chip-label">Site do Laboratório</div>
-          <div class="chip-sub">Disponibilização online conforme necessidade</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <p><span>LABIAN</span> · Laboratório de Bioinformática em Alimentos e Nutrição<br>
-  DECAN · FEA · UNICAMP — Campinas, SP</p>
-</footer>
-
-<script>
-/* ── Canvas de Partículas (EFEITOS AUMENTADOS) ── */
-const canvas = document.getElementById('particle-canvas');
-const ctx    = canvas.getContext('2d');
-let W, H, particles = [];
-
-function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-
-function Particle() {
-  this.x     = Math.random() * W;
-  this.y     = Math.random() * H;
-  // Tamanho ligeiramente maior
-  this.r     = Math.random() * 2.5 + 0.8; 
-  // VELOCIDADE DOBRADA (era 0.4)
-  this.vx    = (Math.random() - .5) * 0.8; 
-  this.vy    = (Math.random() - .5) * 0.8; 
-  this.alpha = Math.random() * .5 + .1;
-  this.color = Math.random() > .5 ? '0,200,212' : '111,217,74';
-}
-
-function initParticles() { 
-  particles = []; 
-  // MAIS QUE DOBRO DE PARTÍCULAS (era 60)
-  const particleCount = 150; 
-  for (let i = 0; i < particleCount; i++) particles.push(new Particle()); 
-}
-
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0 || p.x > W) p.vx *= -1;
-    if (p.y < 0 || p.y > H) p.vy *= -1;
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.color},${p.alpha})`; ctx.fill();
-  });
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-      if (d < 110) { // Distância de conexão ligeiramente maior
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(0,200,212,${.12 * (1 - d / 110)})`;
-        ctx.lineWidth = 0.5; ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(draw);
-}
-resize(); initParticles(); draw();
-window.addEventListener('resize', () => { resize(); initParticles(); });
-
-/* ── GSAP & ScrollTrigger ── */
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.set(['#hero-title','#hero-sub','#hero-ctas'], { opacity: 0 });
-gsap.set('#hero-title', { y: 30 }); gsap.set('#hero-sub', { y: 16 }); gsap.set('#hero-ctas', { y: 16 });
-gsap.set('#hero-tag', { opacity: 0 }); gsap.set('#scroll-hint', { opacity: 0 });
-
-const heroTL = gsap.timeline({ defaults: { ease: 'power4.out' } });
-heroTL
-  .from('#hero-grid', { opacity: 0, scale: 1.08, duration: 2, ease: 'power2.out' }, 0.1)
-  .from('#orb1', { opacity: 0, y: 50, duration: 2.2, ease: 'power2.out' }, 0.2)
-  .from('#orb2', { opacity: 0, y: 70, duration: 2.2, ease: 'power2.out' }, 0.4)
-  // Tag aparece mais rápido para acompanhar proximidade do topo
-  .to('#hero-tag',   { opacity: 1, duration: 0.6, ease: 'back.out(1.5)' }, 0.5) 
-  .to('#hero-title', { opacity: 1, y: 0, duration: 1.5, ease: 'expo.out' }, 0.8)
-  .to('#hero-sub',   { opacity: 1, y: 0, duration: .85, ease: 'power3.out' }, 1.3)
-  .to('#hero-ctas',  { opacity: 1, y: 0, duration: .8,  ease: 'power3.out' }, 1.6)
-  .to('#scroll-hint',{ opacity: 1, duration: .7, ease: 'power2.out' }, 2.1);
-
-ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: '25% top',
-  onUpdate: self => gsap.set('#scroll-hint', { opacity: 1 - self.progress * 4 }) });
-
-ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true,
-  onUpdate: self => {
-    const p = self.progress;
-    document.getElementById('hero-grid').style.transform =
-      `perspective(800px) rotateX(${12 - p * 7}deg) scale(${1.3 + p * 0.55})`;
-  }
-});
-
-// Suavizado o parallax do conteúdo para acompanhar o layout mais justo
-gsap.to('#hero > *:not(#hero-grid):not(#orb1):not(#orb2):not(#particle-canvas)', {
-  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
-  y: -40, ease: 'none'
-});
-gsap.to('#orb1', { scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }, y: -90, ease: 'none' });
-gsap.to('#orb2', { scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 2   }, y: -50, ease: 'none' });
-
-gsap.utils.toArray('.access-card').forEach((card, i) => {
-  gsap.from(card, { scrollTrigger: { trigger: card, start: 'top 88%' },
-    opacity: 0, y: 28, scale: .96, duration: .8, delay: i * .1, ease: 'back.out(1.2)' });
-});
-gsap.utils.toArray('.reveal').forEach(el => {
-  gsap.fromTo(el, { opacity: 0, y: 30 }, { scrollTrigger: { trigger: el, start: 'top 85%' },
-    opacity: 1, y: 0, duration: .8, ease: 'power3.out' });
-});
-gsap.utils.toArray('.chip').forEach((chip, i) => {
-  gsap.from(chip, { scrollTrigger: { trigger: chip, start: 'top 90%' },
-    opacity: 0, x: 22, duration: .65, delay: i * .1, ease: 'power3.out' });
-});
-
-/* ── Contador Animado ── */
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target); if (!target) return;
-  let start = 0;
-  const step = ts => { if (!start) start = ts;
-    const p = Math.min((ts - start) / 1800, 1);
-    el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
-    if (p < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
-const sObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); sObs.unobserve(e.target); } });
-}, { threshold: .5 });
-document.querySelectorAll('[data-target]').forEach(el => sObs.observe(el));
-
-/* ── Lenis Smooth Scroll ── */
-const inIframe = window.self !== window.top;
-if (!inIframe) {
-  const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
-  function rafLoop(time) { lenis.raf(time); requestAnimationFrame(rafLoop); }
-  requestAnimationFrame(rafLoop);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(time => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-}
-</script>
-</body>
-</html>
+.hero-cta-group
