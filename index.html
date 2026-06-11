@@ -183,8 +183,11 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.82) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.line-2 {
+
+  .line-2 {
   display: block;
+  font-size: clamp(1.2rem, 2.8vw, 2.2rem); /* Controla o tamanho dessa linha específica */
+  margin-top: 10px; /* Dá um leve respiro em relação à palavra de cima */
   background: linear-gradient(90deg, var(--cyan) 0%, var(--lime) 55%, var(--cyan) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   background-size: 200% 100%;
