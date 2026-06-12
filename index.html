@@ -587,6 +587,178 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   font-weight: 600;
 }
 
+/* ═══════════════════════ NUCLEOTÍDEOS FLUTUANTES ═══════════════════════ */
+.nucleotide {
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  font-size: clamp(11px, 1.4vw, 18px);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  animation: nucleoFloat linear infinite;
+  user-select: none;
+}
+@keyframes nucleoFloat {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 0.7; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ═══════════════════════ BINARY RAIN ═══════════════════════ */
+#binary-canvas {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  opacity: 0.55;
+}
+
+/* ═══════════════════════ DNA HELIX ═══════════════════════ */
+#dna-canvas {
+  position: absolute; top: 0; right: 0;
+  width: min(420px, 45%); height: 100%;
+  pointer-events: none; z-index: 0;
+  opacity: 0.55;
+}
+
+/* ═══════════════════════ GLITCH TITLES ═══════════════════════ */
+.glitch-title {
+  position: relative;
+  display: inline-block;
+}
+.glitch-title.glitch-active::before,
+.glitch-title.glitch-active::after {
+  content: attr(data-text);
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+.glitch-title.glitch-active::before {
+  color: var(--cyan);
+  animation: glitch-1 0.4s steps(1) forwards;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+.glitch-title.glitch-active::after {
+  color: var(--lime);
+  animation: glitch-2 0.4s steps(1) forwards;
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+@keyframes glitch-1 {
+  0%   { transform: translate(-3px, 2px); opacity: 1; }
+  20%  { transform: translate(3px, -2px); }
+  40%  { transform: translate(-2px, 3px); }
+  60%  { transform: translate(2px, 0px); }
+  80%  { transform: translate(0, 0); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes glitch-2 {
+  0%   { transform: translate(3px, -2px); opacity: 1; }
+  20%  { transform: translate(-3px, 2px); }
+  40%  { transform: translate(3px, -1px); }
+  60%  { transform: translate(-1px, 1px); }
+  80%  { transform: translate(0, 0); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ═══════════════════════ SCROLL MAGIC — CAPACITAÇÃO STICKY ═══════════════════════ */
+.sticky-cap-wrap {
+  position: relative;
+}
+.sticky-cap-pin {
+  position: sticky;
+  top: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 60px);
+  align-items: start;
+  padding: clamp(40px,6vw,80px) clamp(20px,5vw,56px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.sticky-cap-left {
+  position: sticky;
+  top: 120px;
+}
+.sticky-cap-left .eyebrow { display: block; margin-bottom: 12px; }
+.sticky-cap-left h2 { margin-bottom: 16px; }
+.sticky-cap-left p { color: #667; line-height: 1.7; margin-bottom: 28px; }
+.sticky-cap-progress {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 24px;
+}
+.cap-prog-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: .82rem; font-weight: 600; letter-spacing: .06em;
+  color: rgba(26,39,68,0.35);
+  transition: color 0.35s ease;
+  cursor: default;
+}
+.cap-prog-item.active { color: var(--ink); }
+.cap-prog-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(0,200,212,0.2);
+  border: 2px solid rgba(0,200,212,0.3);
+  transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+  flex-shrink: 0;
+}
+.cap-prog-item.active .cap-prog-dot {
+  background: var(--cyan);
+  border-color: var(--lime);
+  transform: scale(1.4);
+  box-shadow: 0 0 8px rgba(0,200,212,0.6);
+}
+
+.sticky-cap-right { display: flex; flex-direction: column; gap: 20px; }
+.cap-module {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid rgba(0,200,212,0.12);
+  box-shadow: 0 4px 20px rgba(26,39,68,0.06);
+  opacity: 0.25;
+  transform: translateY(24px) scale(0.97);
+  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  position: relative; overflow: hidden;
+}
+.cap-module.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 0 8px 36px rgba(26,39,68,0.10);
+  border-color: rgba(0,200,212,0.28);
+}
+.cap-module::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad-brand);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.cap-module.visible::before { transform: scaleX(1); }
+.cap-mod-num {
+  font-family: 'DM Mono', monospace;
+  font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+  color: var(--cyan); margin-bottom: 6px;
+}
+.cap-module h3 { font-size: clamp(1.1rem,2vw,1.3rem); font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.cap-module p  { font-size: clamp(.9rem,1.2vw,1rem); color: #556; line-height: 1.65; }
+.cap-mod-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+}
+.cap-tag {
+  font-size: .75rem; font-weight: 600; letter-spacing: .05em;
+  padding: 4px 10px; border-radius: 99px;
+  background: rgba(0,200,212,0.08);
+  color: var(--cyan);
+  border: 1px solid rgba(0,200,212,0.2);
+}
+
+@media (max-width: 768px) {
+  .sticky-cap-pin { grid-template-columns: 1fr; }
+  .sticky-cap-left { position: relative; top: 0; }
+  #dna-canvas { width: 100%; opacity: 0.3; }
+}
+
 /* ═══════════════════════ MOBILE ═══════════════════════ */
 @media (max-width: 768px) {
   .site-header { padding-top: clamp(60px, 8vh, 100px); }
@@ -644,6 +816,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 
 <section class="hero" id="hero">
   <canvas id="particle-canvas"></canvas>
+  <div id="nucleotide-layer" style="position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;"></div>
   <div class="hero-grid" id="hero-grid"></div>
   <div class="hero-orb-1" id="orb1"></div>
   <div class="hero-orb-2" id="orb2"></div>
@@ -733,10 +906,67 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
   </div>
 </section>
 
+<!-- ═══ CAPACITAÇÃO STICKY SCROLL ═══ -->
+<section id="capacitacao" style="background: var(--off); padding: clamp(40px,6vw,80px) 0 0;">
+  <div class="sticky-cap-wrap">
+    <div class="sticky-cap-pin">
+      <div class="sticky-cap-left reveal">
+        <span class="eyebrow">Capacitação</span>
+        <h2 class="glitch-title" data-text="Cursos de R para Bioinformática">Cursos de R para Bioinformática</h2>
+        <p>Três módulos progressivos para dominar análise de dados ômicos, do básico ao avançado. Vagas limitadas — inscrições abertas até Agosto/2026.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXlzOjzoVyxLsV9HH7jEFSTCq2KSM4yueUZ2gSQbaVBk00Kg/viewform" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:4px">
+          Inscrever-se <span class="btn-arrow">→</span>
+        </a>
+        <div class="sticky-cap-progress">
+          <div class="cap-prog-item active" data-mod="0"><div class="cap-prog-dot"></div>Módulo 1 — Introdução ao R</div>
+          <div class="cap-prog-item" data-mod="1"><div class="cap-prog-dot"></div>Módulo 2 — Ferramentas Ômicas</div>
+          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 3 — Modelos Estatísticos</div>
+        </div>
+      </div>
+      <div class="sticky-cap-right">
+        <div class="cap-module visible" data-mod-card="0">
+          <div class="cap-mod-num">// MÓDULO 01</div>
+          <h3>Introdução ao R</h3>
+          <p>Fundamentos da linguagem R aplicados à ciência de dados biológicos. Instalação, ambiente RStudio, manipulação de dados, visualizações básicas e introdução ao tidyverse.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">R base</span>
+            <span class="cap-tag">tidyverse</span>
+            <span class="cap-tag">ggplot2</span>
+            <span class="cap-tag">dplyr</span>
+          </div>
+        </div>
+        <div class="cap-module" data-mod-card="1">
+          <div class="cap-mod-num">// MÓDULO 02</div>
+          <h3>Ferramentas Ômicas</h3>
+          <p>Análise de dados WGS, RNA-Seq e Metagenômica com bioconductor. Pipelines de expressão diferencial, controle de qualidade, anotação funcional e interpretação de resultados.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">RNA-Seq</span>
+            <span class="cap-tag">DESeq2</span>
+            <span class="cap-tag">Metagenômica</span>
+            <span class="cap-tag">Bioconductor</span>
+          </div>
+        </div>
+        <div class="cap-module" data-mod-card="2">
+          <div class="cap-mod-num">// MÓDULO 03</div>
+          <h3>Modelos Estatísticos</h3>
+          <p>Estatística aplicada à nutrição e bioinformática. Regressão, ANOVA, testes de hipótese, análise multivariada, clustering e visualização avançada de dados complexos.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">ANOVA</span>
+            <span class="cap-tag">Regressão</span>
+            <span class="cap-tag">PCA</span>
+            <span class="cap-tag">Clustering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="workflow-section" id="workflow">
+  <canvas id="dna-canvas"></canvas>
   <div class="section-title reveal">
     <span class="eyebrow">Processo</span>
-    <h2>Como funciona o nosso serviço</h2>
+    <h2 class="glitch-title" data-text="Como funciona o nosso serviço">Como funciona o nosso serviço</h2>
     <p>Do registro à entrega — transparente e rastreável em cada etapa</p>
   </div>
   <div class="flow-container">
@@ -790,6 +1020,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 </section>
 
 <section class="storage-section" id="storage">
+  <canvas id="binary-canvas"></canvas>
   <div class="storage-inner">
     <div class="storage-text reveal">
       <h2>Suas análises, sempre acessíveis</h2>
@@ -828,6 +1059,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 </footer>
 
 <script>
+
 /* ── Scroll Progress Bar ── */
 const progressBar = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {
@@ -835,6 +1067,224 @@ window.addEventListener('scroll', () => {
   const total = document.documentElement.scrollHeight - window.innerHeight;
   progressBar.style.width = (scrolled / total * 100) + '%';
 }, { passive: true });
+
+/* ══════════════════════════════════════════
+   🧬 NUCLEOTÍDEOS FLUTUANTES NO HERO
+══════════════════════════════════════════ */
+const nucleotideLayer = document.getElementById('nucleotide-layer');
+const nucleotides = ['A', 'T', 'G', 'C', 'A', 'T', 'G', 'C', '01', '10', '0', '1'];
+const nColors = [
+  'rgba(0,200,212,VAL)',
+  'rgba(111,217,74,VAL)',
+  'rgba(0,200,212,VAL)',
+  'rgba(255,90,95,VAL)',
+  'rgba(111,217,74,VAL)',
+];
+
+function spawnNucleotide() {
+  const el = document.createElement('span');
+  el.className = 'nucleotide';
+  const letter = nucleotides[Math.floor(Math.random() * nucleotides.length)];
+  el.textContent = letter;
+  const x = Math.random() * 100;
+  const dur = 9 + Math.random() * 14;
+  const size = 11 + Math.random() * 14;
+  const alpha = 0.18 + Math.random() * 0.38;
+  const col = nColors[Math.floor(Math.random() * nColors.length)].replace('VAL', alpha.toFixed(2));
+  el.style.cssText = `left:${x}%;bottom:-30px;font-size:${size}px;color:${col};animation-duration:${dur}s;animation-delay:${Math.random()*3}s`;
+  nucleotideLayer.appendChild(el);
+  setTimeout(() => el.remove(), (dur + 3) * 1000);
+}
+
+setInterval(spawnNucleotide, 600);
+for (let i = 0; i < 12; i++) setTimeout(spawnNucleotide, i * 200);
+
+/* ══════════════════════════════════════════
+   🧬 DNA DUPLA HÉLICE (workflow section)
+══════════════════════════════════════════ */
+const dnaCanvas = document.getElementById('dna-canvas');
+const dnaCtx = dnaCanvas.getContext('2d');
+
+function resizeDNA() {
+  dnaCanvas.width  = dnaCanvas.offsetWidth;
+  dnaCanvas.height = dnaCanvas.offsetHeight;
+}
+resizeDNA();
+window.addEventListener('resize', resizeDNA);
+
+let dnaT = 0;
+const BASE_PAIRS = ['A-T', 'T-A', 'G-C', 'C-G'];
+const PAIR_COLORS = {
+  'A': '#00C8D4', 'T': '#6FD94A', 'G': '#FF5A5F', 'C': '#00C8D4'
+};
+
+function drawDNA() {
+  const W = dnaCanvas.width;
+  const H = dnaCanvas.height;
+  dnaCtx.clearRect(0, 0, W, H);
+
+  const cx = W / 2;
+  const amplitude = W * 0.3;
+  const spacing = 32;
+  const totalSteps = Math.ceil(H / spacing) + 2;
+
+  for (let i = 0; i < totalSteps; i++) {
+    const y = i * spacing - (dnaT % spacing);
+    const phase = (i * spacing + dnaT) * 0.045;
+    const x1 = cx + Math.sin(phase) * amplitude;
+    const x2 = cx + Math.sin(phase + Math.PI) * amplitude;
+    const cosVal = Math.cos(phase);
+    const alpha = 0.18 + Math.abs(cosVal) * 0.65;
+
+    // Backbone dots
+    dnaCtx.beginPath();
+    dnaCtx.arc(x1, y, 4, 0, Math.PI * 2);
+    dnaCtx.fillStyle = `rgba(0,200,212,${alpha})`;
+    dnaCtx.fill();
+
+    dnaCtx.beginPath();
+    dnaCtx.arc(x2, y, 4, 0, Math.PI * 2);
+    dnaCtx.fillStyle = `rgba(111,217,74,${alpha})`;
+    dnaCtx.fill();
+
+    // Base pair rungs (only when strands are close enough)
+    if (Math.abs(cosVal) < 0.45) {
+      const rungAlpha = (0.45 - Math.abs(cosVal)) / 0.45 * 0.55;
+      const baseIdx = i % 4;
+      const pair = BASE_PAIRS[baseIdx];
+      const midX = (x1 + x2) / 2;
+
+      dnaCtx.beginPath();
+      dnaCtx.moveTo(x1, y);
+      dnaCtx.lineTo(x2, y);
+      dnaCtx.strokeStyle = `rgba(0,200,212,${rungAlpha * 0.6})`;
+      dnaCtx.lineWidth = 1.5;
+      dnaCtx.stroke();
+
+      // Base pair labels
+      dnaCtx.font = '600 9px DM Mono, monospace';
+      dnaCtx.textAlign = 'center';
+      dnaCtx.fillStyle = `rgba(0,200,212,${rungAlpha * 0.9})`;
+      dnaCtx.fillText(pair[0], midX - 8, y + 3);
+      dnaCtx.fillStyle = `rgba(111,217,74,${rungAlpha * 0.9})`;
+      dnaCtx.fillText(pair[2], midX + 8, y + 3);
+    }
+  }
+
+  // Continuous backbone lines
+  dnaCtx.beginPath();
+  for (let i = 0; i < totalSteps; i++) {
+    const y = i * spacing - (dnaT % spacing);
+    const phase = (i * spacing + dnaT) * 0.045;
+    const x1 = cx + Math.sin(phase) * amplitude;
+    if (i === 0) dnaCtx.moveTo(x1, y); else dnaCtx.lineTo(x1, y);
+  }
+  dnaCtx.strokeStyle = 'rgba(0,200,212,0.25)';
+  dnaCtx.lineWidth = 2; dnaCtx.stroke();
+
+  dnaCtx.beginPath();
+  for (let i = 0; i < totalSteps; i++) {
+    const y = i * spacing - (dnaT % spacing);
+    const phase = (i * spacing + dnaT) * 0.045;
+    const x2 = cx + Math.sin(phase + Math.PI) * amplitude;
+    if (i === 0) dnaCtx.moveTo(x2, y); else dnaCtx.lineTo(x2, y);
+  }
+  dnaCtx.strokeStyle = 'rgba(111,217,74,0.22)';
+  dnaCtx.lineWidth = 2; dnaCtx.stroke();
+
+  dnaT += 0.7;
+  requestAnimationFrame(drawDNA);
+}
+drawDNA();
+
+/* ══════════════════════════════════════════
+   💻 BINARY RAIN (storage section)
+══════════════════════════════════════════ */
+const binCanvas = document.getElementById('binary-canvas');
+const binCtx = binCanvas.getContext('2d');
+
+function resizeBin() {
+  binCanvas.width  = binCanvas.offsetWidth;
+  binCanvas.height = binCanvas.offsetHeight;
+}
+resizeBin();
+window.addEventListener('resize', () => { resizeBin(); initBinary(); });
+
+const FONT_SIZE = 14;
+let binCols, binDrops;
+
+function initBinary() {
+  binCols = Math.floor(binCanvas.width / FONT_SIZE);
+  binDrops = Array(binCols).fill(1).map(() => Math.random() * binCanvas.height / FONT_SIZE);
+}
+initBinary();
+
+function drawBinary() {
+  binCtx.fillStyle = 'rgba(10,18,40,0.1)';
+  binCtx.fillRect(0, 0, binCanvas.width, binCanvas.height);
+
+  binCtx.font = `bold ${FONT_SIZE}px 'DM Mono', monospace`;
+
+  for (let i = 0; i < binCols; i++) {
+    const char = Math.random() > 0.5 ? '1' : '0';
+    const x = i * FONT_SIZE;
+    const y = binDrops[i] * FONT_SIZE;
+
+    // Gradient: bright head, fading tail
+    const brightness = Math.random();
+    if (brightness > 0.92) {
+      binCtx.fillStyle = '#ffffff';
+    } else if (brightness > 0.7) {
+      binCtx.fillStyle = '#6FD94A';
+    } else {
+      binCtx.fillStyle = `rgba(0,200,212,${0.15 + brightness * 0.5})`;
+    }
+
+    binCtx.fillText(char, x, y);
+
+    if (y > binCanvas.height && Math.random() > 0.975) {
+      binDrops[i] = 0;
+    }
+    binDrops[i] += 0.4 + Math.random() * 0.3;
+  }
+  requestAnimationFrame(drawBinary);
+}
+drawBinary();
+
+/* ══════════════════════════════════════════
+   ⚡ GLITCH TEXT ON SCROLL
+══════════════════════════════════════════ */
+const glitchObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      el.classList.add('glitch-active');
+      setTimeout(() => el.classList.remove('glitch-active'), 500);
+      glitchObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.glitch-title').forEach(el => glitchObserver.observe(el));
+
+/* ══════════════════════════════════════════
+   🎓 STICKY CAPACITAÇÃO — módulos progressivos
+══════════════════════════════════════════ */
+const capModules   = document.querySelectorAll('.cap-module');
+const capProgItems = document.querySelectorAll('.cap-prog-item');
+
+const capObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const idx = parseInt(entry.target.dataset.modCard);
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      capProgItems.forEach(p => p.classList.remove('active'));
+      if (capProgItems[idx]) capProgItems[idx].classList.add('active');
+    }
+  });
+}, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
+
+capModules.forEach(m => capObserver.observe(m));
 
 /* ── Custom Cursor ── */
 const dot  = document.getElementById('cursor-dot');
@@ -844,8 +1294,8 @@ let ringX = 0, ringY = 0;
 
 window.addEventListener('mousemove', e => {
   mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left  = mouseX + 'px';
-  dot.style.top   = mouseY + 'px';
+  dot.style.left = mouseX + 'px';
+  dot.style.top  = mouseY + 'px';
 });
 
 function animateRing() {
@@ -857,32 +1307,26 @@ function animateRing() {
 }
 animateRing();
 
-document.querySelectorAll('a, button, .access-card, .chip, .btn-primary, .btn-secondary, .btn-card, [data-tilt]')
+document.querySelectorAll('a, button, .access-card, .chip, .btn-primary, .btn-secondary, .btn-card, [data-tilt], .cap-module')
   .forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
-
 document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
 document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
 
 /* ── Navbar Glassmorphism ── */
-const nav       = document.getElementById('site-nav');
-const navPill   = document.getElementById('nav-pill');
-const navLinks  = document.querySelectorAll('[data-nav]');
-const heroEl    = document.getElementById('hero');
+const nav      = document.getElementById('site-nav');
+const navPill  = document.getElementById('nav-pill');
+const navLinks = document.querySelectorAll('[data-nav]');
+const heroEl   = document.getElementById('hero');
 
 function updateNav() {
-  if (window.scrollY > heroEl.offsetHeight * 0.3) {
-    nav.classList.add('nav-visible');
-  } else {
-    nav.classList.remove('nav-visible');
-  }
+  nav.classList.toggle('nav-visible', window.scrollY > heroEl.offsetHeight * 0.3);
 }
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
-// Active pill on hover
 navLinks.forEach(link => {
   link.addEventListener('mouseenter', () => {
     const rect = link.getBoundingClientRect();
@@ -892,11 +1336,8 @@ navLinks.forEach(link => {
     navPill.style.width = rect.width + 'px';
   });
 });
-document.getElementById('site-nav').addEventListener('mouseleave', () => {
-  navPill.style.opacity = '0';
-});
+document.getElementById('site-nav').addEventListener('mouseleave', () => { navPill.style.opacity = '0'; });
 
-// Smooth scroll for nav links
 navLinks.forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
@@ -913,21 +1354,16 @@ let W, H, particles = [];
 function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
 
 function Particle() {
-  this.x     = Math.random() * W;
-  this.y     = Math.random() * H;
-  this.r     = Math.random() * 2.5 + 0.8;
-  this.vx    = (Math.random() - .5) * 0.8;
-  this.vy    = (Math.random() - .5) * 0.8;
+  this.x = Math.random() * W; this.y = Math.random() * H;
+  this.r = Math.random() * 2.5 + 0.8;
+  this.vx = (Math.random() - .5) * 0.8; this.vy = (Math.random() - .5) * 0.8;
   this.alpha = Math.random() * .5 + .1;
   this.color = Math.random() > .5 ? '0,200,212' : '111,217,74';
 }
 
-function initParticles() {
-  particles = [];
-  for (let i = 0; i < 150; i++) particles.push(new Particle());
-}
+function initParticles() { particles = []; for (let i = 0; i < 150; i++) particles.push(new Particle()); }
 
-function draw() {
+function drawParticles() {
   ctx.clearRect(0, 0, W, H);
   particles.forEach(p => {
     p.x += p.vx; p.y += p.vy;
@@ -940,17 +1376,14 @@ function draw() {
     for (let j = i + 1; j < particles.length; j++) {
       const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
       if (d < 110) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(0,200,212,${.12 * (1 - d / 110)})`;
-        ctx.lineWidth = 0.5; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0,200,212,${.12 * (1 - d / 110)})`; ctx.lineWidth = 0.5; ctx.stroke();
       }
     }
   }
-  requestAnimationFrame(draw);
+  requestAnimationFrame(drawParticles);
 }
-resize(); initParticles(); draw();
+resize(); initParticles(); drawParticles();
 window.addEventListener('resize', () => { resize(); initParticles(); });
 
 /* ── GSAP & ScrollTrigger ── */
@@ -971,7 +1404,6 @@ heroTL
   .to('#hero-ctas',  { opacity: 1, y: 0, duration: .8,  ease: 'power3.out' }, 1.6)
   .to('#scroll-hint',{ opacity: 1, duration: .7, ease: 'power2.out' }, 2.1);
 
-/* ── Typed.js Typewriter ── */
 heroTL.add(() => {
   new Typed('#typed-text', {
     strings: [
@@ -981,12 +1413,7 @@ heroTL.add(() => {
       'Modelos Estatísticos em R',
       'Bioinformática para Nutrição'
     ],
-    typeSpeed: 42,
-    backSpeed: 22,
-    backDelay: 2200,
-    startDelay: 100,
-    loop: true,
-    cursorChar: '|',
+    typeSpeed: 42, backSpeed: 22, backDelay: 2200, startDelay: 100, loop: true, cursorChar: '|',
   });
 }, 1.4);
 
@@ -1001,7 +1428,7 @@ ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', sc
   }
 });
 
-gsap.to('#hero > *:not(#hero-grid):not(#orb1):not(#orb2):not(#particle-canvas)', {
+gsap.to('#hero > *:not(#hero-grid):not(#orb1):not(#orb2):not(#particle-canvas):not(#nucleotide-layer)', {
   scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
   y: -40, ease: 'none'
 });
@@ -1023,11 +1450,8 @@ gsap.utils.toArray('.chip').forEach((chip, i) => {
 
 /* ── Flow Connectors Animados ── */
 document.querySelectorAll('.flow-connector').forEach(connector => {
-  ScrollTrigger.create({
-    trigger: connector,
-    start: 'top 80%',
-    onEnter: () => connector.classList.add('animated')
-  });
+  ScrollTrigger.create({ trigger: connector, start: 'top 80%',
+    onEnter: () => connector.classList.add('animated') });
 });
 
 /* ── Vanilla Tilt 3D Cards ── */
