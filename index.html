@@ -1409,16 +1409,22 @@ heroTL
   .to('#hero-ctas',  { opacity: 1, y: 0, duration: .8,  ease: 'power3.out' }, 1.6)
   .to('#scroll-hint',{ opacity: 1, duration: .7, ease: 'power2.out' }, 2.1);
 
+/* Substitua este bloco no seu código atual */
 heroTL.add(() => {
   new Typed('#typed-text', {
     strings: [
-      'Suporte em análises de dados',
-      'Ferramentas Ômicas',
-      'Análises na plataforma R',
-      'Biologia molecular'
-      'Bioinformática na FEA'
+      'Ciência de Dados em Alimentos',
+      'Suporte Analítico Avançado',
+      'Ecossistema Integrado de Ômicas',
+      'Soluções e Pipelines em R',
+      'Autonomia para sua Pesquisa'
     ],
-    typeSpeed: 42, backSpeed: 22, backDelay: 2200, startDelay: 100, loop: true, cursorChar: '|',
+    typeSpeed: 50, /* Digitação levemente mais rápida */
+    backSpeed: 30, /* Apagar mais natural */
+    backDelay: 2000, /* Tempo ideal (2s) para a pessoa ler a frase inteira */
+    startDelay: 100, 
+    loop: true, 
+    cursorChar: '|',
   });
 }, 1.4);
 
