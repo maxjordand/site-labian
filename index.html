@@ -910,6 +910,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 <section id="capacitacao" style="background: var(--off); padding: clamp(40px,6vw,80px) 0 0;">
   <div class="sticky-cap-wrap">
     <div class="sticky-cap-pin">
+      
       <div class="sticky-cap-left reveal">
         <span class="eyebrow">Capacitação</span>
         <h2 class="glitch-title" data-text="Cursos de R para Bioinformática">Cursos de R para Bioinformática</h2>
@@ -917,47 +918,82 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfXlzOjzoVyxLsV9HH7jEFSTCq2KSM4yueUZ2gSQbaVBk00Kg/viewform" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:4px">
           Inscrever-se <span class="btn-arrow">→</span>
         </a>
+        
         <div class="sticky-cap-progress">
-          <div class="cap-prog-item active" data-mod="0"><div class="cap-prog-dot"></div>Módulo 1 — Introdução a Biologia Molecular</div>
-          <div class="cap-prog-item" data-mod="1"><div class="cap-prog-dot"></div>Módulo 2 — Regulação da expressão gênica</div>
-          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 3 — Banco de dados biológicos</div>
-          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 4 — Ferramentas de enriquecimento funcional</div>
-          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 5 — Introdução a plataforma R</div>
-          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 6 — Introdução a análise em genômica e transcriptômica</div>
+          <div class="cap-prog-item active" data-mod="0"><div class="cap-prog-dot"></div>Módulo 1 — Introdução à Biologia Molecular</div>
+          <div class="cap-prog-item" data-mod="1"><div class="cap-prog-dot"></div>Módulo 2 — Regulação da Expressão Gênica</div>
+          <div class="cap-prog-item" data-mod="2"><div class="cap-prog-dot"></div>Módulo 3 — Bancos de Dados Biológicos</div>
+          <div class="cap-prog-item" data-mod="3"><div class="cap-prog-dot"></div>Módulo 4 — Ferramentas de Enriquecimento Funcional</div>
+          <div class="cap-prog-item" data-mod="4"><div class="cap-prog-dot"></div>Módulo 5 — Introdução à Plataforma R</div>
+          <div class="cap-prog-item" data-mod="5"><div class="cap-prog-dot"></div>Módulo 6 — Introdução à Análise em Genômica e Transcriptômica</div>
         </div>
       </div>
+      
       <div class="sticky-cap-right">
+        
         <div class="cap-module visible" data-mod-card="0">
           <div class="cap-mod-num">// MÓDULO 01</div>
-          <h3>Introdução ao R</h3>
-          <p>Fundamentos da linguagem R aplicados à ciência de dados biológicos. Instalação, ambiente RStudio, manipulação de dados, visualizações básicas e introdução ao tidyverse.</p>
+          <h3>Introdução à Biologia Molecular</h3>
+          <p>Revisão dos dogmas centrais da biologia. Estrutura e função de DNA, RNA e proteínas para fundamentar as análises ômicas subsequentes.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">DNA / RNA</span>
+            <span class="cap-tag">Genética Básica</span>
+          </div>
+        </div>
+        
+        <div class="cap-module" data-mod-card="1">
+          <div class="cap-mod-num">// MÓDULO 02</div>
+          <h3>Regulação da Expressão Gênica</h3>
+          <p>Compreensão dos mecanismos transcricionais e pós-transcricionais. Como as variações nos níveis de RNA mensageiro impactam as respostas fenotípicas.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">Transcrição</span>
+            <span class="cap-tag">Regulação Gênica</span>
+          </div>
+        </div>
+        
+        <div class="cap-module" data-mod-card="2">
+          <div class="cap-mod-num">// MÓDULO 03</div>
+          <h3>Bancos de Dados Biológicos</h3>
+          <p>Navegação e extração de dados públicos em plataformas globais. Estratégias de busca para genomas, transcritos e anotações funcionais.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">NCBI</span>
+            <span class="cap-tag">Ensembl</span>
+            <span class="cap-tag">UniProt</span>
+          </div>
+        </div>
+        
+        <div class="cap-module" data-mod-card="3">
+          <div class="cap-mod-num">// MÓDULO 04</div>
+          <h3>Ferramentas de Enriquecimento Funcional</h3>
+          <p>Tradução de listas de genes em vias biológicas. Uso de ferramentas web e algoritmos para análise de Gene Ontology (GO) e KEGG pathways.</p>
+          <div class="cap-mod-tags">
+            <span class="cap-tag">Gene Ontology</span>
+            <span class="cap-tag">KEGG Pathways</span>
+          </div>
+        </div>
+        
+        <div class="cap-module" data-mod-card="4">
+          <div class="cap-mod-num">// MÓDULO 05</div>
+          <h3>Introdução à Plataforma R</h3>
+          <p>Fundamentos da linguagem R aplicados à ciência de dados biológicos. Instalação, ambiente RStudio, manipulação de dados e introdução ao tidyverse.</p>
           <div class="cap-mod-tags">
             <span class="cap-tag">R base</span>
             <span class="cap-tag">tidyverse</span>
-            <span class="cap-tag">ggplot2</span>
             <span class="cap-tag">dplyr</span>
           </div>
         </div>
-        <div class="cap-module" data-mod-card="1">
-          <div class="cap-mod-num">// MÓDULO 02</div>
-          <h3>Ferramentas Ômicas</h3>
-          <p>Análise de dados de genômica e transcriptomica em R. Pipelines de expressão diferencial, controle de qualidade, anotação funcional e interpretação de resultados.</p>
+        
+        <div class="cap-module" data-mod-card="5">
+          <div class="cap-mod-num">// MÓDULO 06</div>
+          <h3>Análise em Genômica e Transcriptômica</h3>
+          <p>Aplicação prática em R. Pipelines de expressão diferencial, controle de qualidade, geração de gráficos estatísticos (heatmaps, vulcano plots) e interpretação de resultados.</p>
           <div class="cap-mod-tags">
-            <span class="cap-tag">Trancriptômica</span>
-            <span class="cap-tag">Genômica</span>
+            <span class="cap-tag">RNA-Seq</span>
+            <span class="cap-tag">ggplot2</span>
+            <span class="cap-tag">Expressão Diferencial</span>
           </div>
         </div>
-        <div class="cap-module" data-mod-card="2">
-          <div class="cap-mod-num">// MÓDULO 03</div>
-          <h3>Modelos Estatísticos</h3>
-          <p>Estatística aplicada à nutrição e bioinformática. Regressão, ANOVA, testes de hipótese, análise multivariada, clustering e visualização avançada de dados complexos.</p>
-          <div class="cap-mod-tags">
-            <span class="cap-tag">ANOVA</span>
-            <span class="cap-tag">Regressão</span>
-            <span class="cap-tag">PCA</span>
-            <span class="cap-tag">Clustering</span>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
