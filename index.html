@@ -1073,23 +1073,6 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 
 <script>
 
-  /* ── Forçar o carregamento no topo da página ── */
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-
-/* ── Scroll Progress Bar (seu código original continua aqui para baixo) ── */
-const progressBar = document.getElementById('scroll-progress');
-
-/* ── Scroll Progress Bar ── */
-const progressBar = document.getElementById('scroll-progress');
-window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY;
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = (scrolled / total * 100) + '%';
-}, { passive: true });
-
 /* ══════════════════════════════════════════
    🧬 NUCLEOTÍDEOS FLUTUANTES NO HERO
 ══════════════════════════════════════════ */
