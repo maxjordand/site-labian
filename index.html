@@ -1507,5 +1507,13 @@ if (!inIframe) {
   gsap.ticker.lagSmoothing(0);
 }
 </script>
+  /* ── Forçar o carregamento no topo da página ── */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+/* ── Scroll Progress Bar (seu código original continua aqui para baixo) ── */
+const progressBar = document.getElementById('scroll-progress');
 </body>
 </html>
