@@ -287,7 +287,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 
 /* Título hero */
 .hero h1 {
-  font-size: clamp(2.4rem, 5.8vw, 5.2rem);
+  font-size: clamp(2.0rem, 5.0vw, 4.5rem);
   font-weight: 700; line-height: 1.08;
   margin-top: 30px;
   margin-bottom: 22px;
@@ -302,7 +302,7 @@ body { font-family: 'Space Grotesk', sans-serif; background: var(--off); color: 
 
   .line-2 {
   display: block;
-  font-size: clamp(1.2rem, 2.8vw, 2.2rem); /* Controla o tamanho dessa linha específica */
+  font-size: clamp(1.0rem, 2.8vw, 2.2rem); /* Controla o tamanho dessa linha específica */
   margin-top: 10px; /* Dá um leve respiro em relação à palavra de cima */
   background: linear-gradient(90deg, var(--cyan) 0%, var(--lime) 55%, var(--cyan) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -1395,7 +1395,7 @@ window.addEventListener('resize', () => { resize(); initParticles(); });
 gsap.registerPlugin(ScrollTrigger);
 
 gsap.set(['#hero-title','#hero-sub','#hero-ctas'], { opacity: 0 });
-gsap.set('#hero-title', { y: 20 }); gsap.set('#hero-sub', { y: 12 }); gsap.set('#hero-ctas', { y: 12 });
+gsap.set('#hero-title', { y: 30 }); gsap.set('#hero-sub', { y: 16 }); gsap.set('#hero-ctas', { y: 16 });
 gsap.set('#hero-tag', { opacity: 0 }); gsap.set('#scroll-hint', { opacity: 0 });
 
 const heroTL = gsap.timeline({ defaults: { ease: 'power4.out' } });
